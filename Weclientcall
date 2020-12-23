@@ -1,0 +1,48 @@
+ WebClientOptions finClientOptions = new WebClientOptions();
+        finClientOptions.setKeepAlive(false);
+
+        WebClient finClient = WebClient.create(vertx, finClientOptions);
+        finClient.get(8443, "localhost", "/")
+                .uri("v1/transactions")
+                .putHeaders( MultiMap.caseInsensitiveMultiMap()
+                        .add("account_tokens", "")
+                        .add("client_id", "")
+                        .add("security_token", "")
+                        .add("correlation_id", "")
+                        .add("authorization", "")
+                        .add("user-authorization", "")
+                )
+                .addQueryParam("status", "")
+                .addQueryParam("statement_end_date", "")
+                .addQueryParam("statement_end_dates", "")
+                .addQueryParam("start_date", "")
+                .addQueryParam("end_date", "")
+                .addQueryParam("offset", "")
+                .addQueryParam("limit", "")
+                .addQueryParam("type", "")
+                .addQueryParam("description", "")
+                .addQueryParam("amount", "")
+                .addQueryParam("min_amount", "")
+                .addQueryParam("max_amount", "")
+                .addQueryParam("extended_details", "")
+                .addQueryParam("filter", "")
+                .addQueryParam("sort_key", "")
+                .addQueryParam("sort_order", "")
+                .addQueryParam("supplementary_digits", "")
+                .addQueryParam("lending_product", "")
+                .addQueryParam("planned_product", "")
+                .addQueryParam("planned", "")
+                .addQueryParam("deferred", "")
+                .addQueryParam("merchant_identifiers", "")
+                .addQueryParam("device_account_tokens", "")
+                .addQueryParam("sub_types", "")
+                .addQueryParam("category_codes", "")
+                .addQueryParam("sub_category_codes", "")
+                .send(result -> {
+                   if (result.succeeded()) {
+                       HttpResponse<Buffer> response = result.result();
+                       System.out.print(response);
+                   } else {
+                       result.cause().printStackTrace();
+                   }
+                });
